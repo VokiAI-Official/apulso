@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Pulso · Carnicería en Bernal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      /* Hero */
+      .x-big { display: block; font-size: clamp(48px, 11vw, 80px); line-height: 1; font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; }
+      .x-kilo { display: block; margin-top: 6px; font: var(--type-title); }
+      .x-status { justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 6px 12px; border-radius: var(--r-pill); background: var(--hero-glass); border: 1px solid var(--hero-glass-stroke); -webkit-backdrop-filter: var(--hark-blur); backdrop-filter: var(--hark-blur); font: var(--type-label); color: var(--hero-text); }
+      .x-status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--fill-system-red); flex: none; }
+      .x-status.is-open::before { background: var(--fill-system-green); box-shadow: 0 0 0 3px rgb(0 166 101 / 0.3); }
+      .x-status[hidden] { display: none; }
+      .x-cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; border-radius: var(--r-pill); background: var(--hero-text); color: var(--hero-surface); font: var(--type-body-strong); font-size: var(--size-prose); text-decoration: none; transition: transform var(--dur-quick) var(--ease-out); }
+      .x-cta:active { transform: scale(0.97); }
+      .x-cta--ghost { background: var(--hero-glass); color: var(--hero-text); border: 1px solid var(--hero-glass-stroke); -webkit-backdrop-filter: var(--hark-blur); backdrop-filter: var(--hark-blur); }
+      .x-cta:focus-visible, .x-filter button:focus-visible, .x-prices a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+      /* Trust strip */
+      .x-trust { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+      .x-trust li { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 12px 16px; border-radius: var(--r-m); background: var(--fill-tertiary); font: var(--type-body-strong); font-size: var(--size-prose); }
+      .x-trust li::before { content: "✓"; flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--fill-primary); color: var(--text-primary-on); font: var(--type-tag); }
+      /* Filter */
+      .x-filter { display: flex; gap: 8px; overflow-x: auto; margin: 0 calc(var(--gutter) * -1) 20px; padding: 2px var(--gutter) 6px; scrollbar-width: none; }
+      .x-filter::-webkit-scrollbar { display: none; }
+      .x-filter button { flex: none; min-height: var(--tap); padding: 0 18px; border-radius: var(--r-pill); border: 1px solid var(--stroke-primary); background: var(--fill-primary-on); color: var(--text-primary); font: var(--type-body-strong); font-size: var(--size-prose); cursor: pointer; }
+      .x-filter button[aria-pressed="true"] { background: var(--fill-primary); color: var(--text-primary-on); border-color: var(--fill-primary); }
+      [data-cat][hidden], .section[hidden] { display: none !important; }
+      .x-hint { margin: 0 0 12px; font: var(--type-small); color: var(--text-secondary); }
+      /* Price rows */
+      .x-prices { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); column-gap: 28px; }
+      .x-prices > li { border-bottom: 1px solid var(--stroke-primary); }
+      .x-prices > li > a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 10px 6px; margin: 0 -6px; border-radius: var(--r-s); color: inherit; text-decoration: none; transition: background var(--dur-quick) ease; }
+      .x-prices > li > a:hover, .x-prices > li > a:active { background: var(--hover-wash); }
+      .x-prices > li > a::after { content: "›"; flex: none; margin-left: -4px; font-size: 22px; line-height: 1; color: var(--text-secondary); }
+      .x-prices__name { font: var(--type-body); font-size: var(--size-prose); min-width: 0; margin-right: auto; }
+      .x-prices__name small { display: block; margin-top: 2px; font: var(--type-caption); color: var(--text-secondary); }
+      .x-prices__name .pill, .x-prices__name .chip { margin-top: 6px; }
+      .x-prices__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+      .x-prices__price { font: var(--type-heading); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+      .x-prices__price small { display: block; font: var(--type-caption); color: var(--text-secondary); }
+      .x-prices > li.x-hl { grid-column: 1 / -1; background: var(--fill-tertiary); border-radius: var(--r-s); padding-inline: 14px; border-bottom: 0; margin-top: 12px; }
+      .x-prices > li.x-hl > a { margin: 0; padding-inline: 0; }
+      .x-prices > li.x-hl .x-prices__price { font: var(--type-label); color: var(--text-secondary); }
+      .x-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start; }
+      .x-group { background: var(--fill-tertiary); border-radius: var(--r-l); padding: 20px 20px 6px; }
+      .x-group h3 { margin: 0 0 4px; font: var(--type-heading); }
+      .x-group .x-prices { grid-template-columns: minmax(0, 1fr); }
+      .x-group .x-prices > li:last-child { border-bottom: 0; }
+      /* Cómo pedir */
+      .x-how { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+      .x-how li { display: grid; align-content: start; gap: 10px; padding: 24px; border-radius: var(--r-l); background: var(--fill-tertiary); }
+      .x-how__num { font-size: clamp(56px, 7vw, 72px); line-height: 1; font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; }
+      .x-how h3 { font: var(--type-heading); margin: 0; }
+      .x-how p { margin: 0; font-size: var(--size-prose); color: var(--text-secondary); }
+      /* Flyer */
+      .x-flyer { max-width: 340px; }
+      .x-info { background: var(--fill-tertiary); border-radius: var(--r-l); padding: 8px 20px 20px; max-width: 720px; }
+      .x-info dl { margin: 0 0 16px; }
+      .x-info dl > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--stroke-primary); }
+      .x-info dt { font: var(--type-label); color: var(--text-secondary); }
+      .x-info dd { margin: 0; font: var(--type-body); font-size: var(--size-prose); }
+      .x-info dd small { display: block; font: var(--type-small); color: var(--text-secondary); margin-top: 2px; }
+      .x-info .btn { width: 100%; justify-content: center; min-height: 48px; font: var(--type-body-strong); }
+      .x-wa { display: none; }
+      @media (max-width: 760px) {
+        .main { font-size: var(--size-prose); }
+        .x-trust { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+        .x-trust li { min-height: 48px; }
+        .x-cta-row .x-cta { flex: 1 1 0; padding: 0 16px; }
+        .x-how { grid-template-columns: minmax(0, 1fr); }
+        .x-how li { grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 4px 14px; padding: 18px 20px; }
+        .x-how__num { grid-row: span 2; font-size: 56px; }
+        .x-flyer { max-width: 260px; margin-inline: auto; }
+        .x-info dl > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+        .x-wa { position: fixed; left: var(--gutter); right: var(--gutter); bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 50; display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: var(--r-pill); background: var(--fill-primary); color: var(--text-primary-on); font: var(--type-body-strong); font-size: var(--size-prose); text-decoration: none; box-shadow: var(--hark-shadow); }
+        body { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <header class="nav glass" data-auto></header>
+      <main class="main">
+        <section class="hero">
+          <img class="hero__img" src="hero.jpg" alt="Cortes de carne vacuna sobre papel de carnicería en una mesada de madera" fetchpriority="high" />
+          <div class="hero__copy">
+            <p class="hero__eyebrow">A Pulso · Carnicería</p>
+            <h1><span class="x-big">$15.500</span><span class="x-kilo">el kilo</span></h1>
+            <p class="hero__sub">19 cortes vacunos · Bernal · Dentro del súper</p>
+            <p class="x-status" id="estado" role="status" hidden></p>
+            <div class="x-cta-row">
+              <a class="x-cta" href="https://wa.me/5491168681176?text=Hola%20A%20Pulso%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Pedí por WhatsApp</a>
+              <a class="x-cta x-cta--ghost" href="#precios">Ver precios</a>
+            </div>
+            <p class="hero__meta">Compra mínima 1 kg · Lomo, bife de chorizo y vacío: consultá precio</p>
+          </div>
+        </section>
+
+        <ul class="x-trust" aria-label="Por qué A Pulso">
+          <li>Carne fresca todos los días</li>
+          <li>Envío hasta 2 km</li>
+          <li>Pagás como quieras</li>
+        </ul>
+
+        <section class="section" id="precios" data-nav="Precios">
+          <div class="head">
+            <p class="head__eyebrow">Lista de precios</p>
+            <h2>19 cortes, un solo precio: $15.500 el kilo.</h2>
+            <p class="head__sub">Compra mínima 1 kg.</p>
+          </div>
+          <div class="x-filter" role="group" aria-label="Filtrar productos">
+            <button type="button" data-f="todos" aria-pressed="true">Todos</button>
+            <button type="button" data-f="15500" aria-pressed="false">$15.500</button>
+            <button type="button" data-f="vacuno" aria-pressed="false">Vacuno</button>
+            <button type="button" data-f="cerdo" aria-pressed="false">Cerdo</button>
+            <button type="button" data-f="pollo" aria-pressed="false">Pollo</button>
+          </div>
+          <div data-cat="15500 vacuno">
+            <p class="x-hint">Tocá un corte para pedirlo por WhatsApp.</p>
+            <ul class="x-prices">
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Nalga" target="_blank" rel="noopener"><span class="x-prices__name">Nalga</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Tapa%20de%20nalga" target="_blank" rel="noopener"><span class="x-prices__name">Tapa de nalga</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Cuadril" target="_blank" rel="noopener"><span class="x-prices__name">Cuadril</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Colita%20de%20cuadril" target="_blank" rel="noopener"><span class="x-prices__name">Colita de cuadril</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Peceto" target="_blank" rel="noopener"><span class="x-prices__name">Peceto</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Bola%20de%20lomo" target="_blank" rel="noopener"><span class="x-prices__name">Bola de lomo</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Cuadrada" target="_blank" rel="noopener"><span class="x-prices__name">Cuadrada</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Palomita" target="_blank" rel="noopener"><span class="x-prices__name">Palomita</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Tortuguita" target="_blank" rel="noopener"><span class="x-prices__name">Tortuguita</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Roast%20beef" target="_blank" rel="noopener"><span class="x-prices__name">Roast beef</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Aguja" target="_blank" rel="noopener"><span class="x-prices__name">Aguja</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Paleta" target="_blank" rel="noopener"><span class="x-prices__name">Paleta</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Marucha" target="_blank" rel="noopener"><span class="x-prices__name">Marucha</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Carnaza" target="_blank" rel="noopener"><span class="x-prices__name">Carnaza</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Asado" target="_blank" rel="noopener"><span class="x-prices__name">Asado</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Tapa%20de%20asado" target="_blank" rel="noopener"><span class="x-prices__name">Tapa de asado</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Matambre" target="_blank" rel="noopener"><span class="x-prices__name">Matambre</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Entra%C3%B1a" target="_blank" rel="noopener"><span class="x-prices__name">Entraña</span><span class="x-prices__price">$15.500</span></a></li>
+              <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Bife%20ancho" target="_blank" rel="noopener"><span class="x-prices__name">Bife ancho</span><span class="x-prices__price">$15.500</span></a></li>
+              <li class="x-hl"><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Lomo,%20Bife%20de%20chorizo,%20Vac%C3%ADo" target="_blank" rel="noopener"><span class="x-prices__name">Lomo, Bife de chorizo, Vacío</span><span class="x-prices__price">Consultá precio</span></a></li>
+            </ul>
+            <p class="fineprint">Precios por kilo. Compra mínima 1 kg. Pueden cambiar sin aviso.</p>
+          </div>
+        </section>
+
+        <section class="section" id="ofertas" data-nav="Ofertas">
+          <div class="head">
+            <p class="head__eyebrow">Ofertas y otros productos</p>
+            <h2>Packs, cerdo y pollo a mejor precio.</h2>
+          </div>
+          <div class="x-groups">
+            <div class="x-group" data-cat="vacuno">
+              <h3>Vacuno</h3>
+              <ul class="x-prices">
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Osobuco" target="_blank" rel="noopener"><span class="x-prices__name">Osobuco<span class="x-prices__tags"><span class="pill">Pack 2 kg</span></span></span><span class="x-prices__price">$16.000<small>2 kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Falda" target="_blank" rel="noopener"><span class="x-prices__name">Falda<span class="x-prices__tags"><span class="pill">Pack 2 kg $18.000</span></span></span><span class="x-prices__price">$10.000<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Picada%20especial" target="_blank" rel="noopener"><span class="x-prices__name">Picada especial<span class="x-prices__tags"><span class="chip chip--solid">Mejor oferta</span><span class="pill">Pack 2 kg $20.000</span></span></span><span class="x-prices__price">$12.000<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Milanesa%20de%20carne" target="_blank" rel="noopener"><span class="x-prices__name">Milanesa de carne</span><span class="x-prices__price">$10.000<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Chinchul%C3%ADn" target="_blank" rel="noopener"><span class="x-prices__name">Chinchulín</span><span class="x-prices__price">$6.000<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Ri%C3%B1%C3%B3n" target="_blank" rel="noopener"><span class="x-prices__name">Riñón</span><span class="x-prices__price">$7.000<small>el kg</small></span></a></li>
+              </ul>
+            </div>
+            <div class="x-group" data-cat="cerdo">
+              <h3>Cerdo</h3>
+              <ul class="x-prices">
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Bondiola" target="_blank" rel="noopener"><span class="x-prices__name">Bondiola</span><span class="x-prices__price">$8.500<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Carr%C3%A9%20de%20cerdo" target="_blank" rel="noopener"><span class="x-prices__name">Carré de cerdo</span><span class="x-prices__price">$8.500<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Pechito%20de%20cerdo" target="_blank" rel="noopener"><span class="x-prices__name">Pechito de cerdo</span><span class="x-prices__price">$8.500<small>el kg</small></span></a></li>
+              </ul>
+            </div>
+            <div class="x-group" data-cat="pollo">
+              <h3>Pollo</h3>
+              <ul class="x-prices">
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Pollo%20entero" target="_blank" rel="noopener"><span class="x-prices__name">Pollo entero</span><span class="x-prices__price">$4.000<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Pata%20y%20muslo" target="_blank" rel="noopener"><span class="x-prices__name">Pata y muslo<span class="x-prices__tags"><span class="pill">Pack 3 kg $11.000</span></span></span><span class="x-prices__price">$4.200<small>el kg</small></span></a></li>
+                <li><a href="https://wa.me/5491168681176?text=Hola!%20Quiero%20pedir%20Milanesa%20de%20pollo" target="_blank" rel="noopener"><span class="x-prices__name">Milanesa de pollo<span class="x-prices__tags"><span class="pill">Pack 2 kg $16.000</span></span></span><span class="x-prices__price">$10.000<small>el kg</small></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <p class="fineprint">Precios por kilo salvo packs. Pueden cambiar sin aviso.</p>
+        </section>
+
+        <section class="section" id="pedir" data-nav="Cómo pedir">
+          <div class="head">
+            <h2>Pedís por WhatsApp en tres pasos.</h2>
+          </div>
+          <ol class="x-how">
+            <li>
+              <span class="x-how__num" aria-hidden="true">1</span>
+              <h3>Escribinos</h3>
+              <p>Mandanos cortes y kilos al <a class="link" href="https://wa.me/5491168681176?text=Hola%20A%20Pulso%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">11 6868-1176</a>.</p>
+            </li>
+            <li>
+              <span class="x-how__num" aria-hidden="true">2</span>
+              <h3>Confirmamos</h3>
+              <p>Te confirmamos el total.</p>
+            </li>
+            <li>
+              <span class="x-how__num" aria-hidden="true">3</span>
+              <h3>Recibís</h3>
+              <p>Retirás en el local o te lo llevamos hasta 2 km (consultá costo).</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="section" id="flyer">
+          <div class="head"><h2>Nuestro flyer, para compartir.</h2></div>
+          <div class="x-flyer">
+            <figure class="band">
+              <img src="flyer.jpg" alt="Flyer de A Pulso con la lista de cortes a $15.500 el kilo" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+        </section>
+
+        <section class="section" id="donde" data-nav="Dónde estamos">
+          <div class="head">
+            <h2>Estamos dentro del súper, abiertos todos los días.</h2>
+          </div>
+          <div class="x-info">
+            <dl>
+              <div><dt>Dirección</dt><dd>Avellaneda 1155, Bernal<small>Entre Smith y Viejo Bueno, dentro del súper</small></dd></div>
+              <div><dt>Horario</dt><dd>Todos los días<small>9 a 13:30 · 17 a 21</small></dd></div>
+              <div><dt>WhatsApp</dt><dd><a class="link" href="https://wa.me/5491168681176?text=Hola%20A%20Pulso%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">11 6868-1176</a><small>Teléfono y WhatsApp</small></dd></div>
+              <div><dt>Instagram</dt><dd><a class="link" href="https://www.instagram.com/apulso.carniceria/" target="_blank" rel="noopener">@apulso.carniceria</a></dd></div>
+            </dl>
+            <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Avellaneda%201155%2C%20Bernal%2C%20Buenos%20Aires" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
+        </section>
+
+        <section class="section" id="asado">
+          <div class="head"><h2>Para tu próximo asado.</h2></div>
+          <aside class="callout" aria-label="Asado">
+            <p class="callout__head">Te ayudamos</p>
+            <p class="callout__lead">
+              <strong>¿Armás un asado?</strong> Escribinos y te ayudamos a calcular cuánto llevar.
+            </p>
+            <a class="btn" href="https://wa.me/5491168681176?text=Hola%20A%20Pulso%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Pedí por WhatsApp</a>
+          </aside>
+        </section>
+      </main>
+      <footer class="foot">
+        <p>A Pulso · Carnicería en Bernal. Precios por kilo salvo packs, pueden cambiar sin aviso.</p>
+        <nav aria-label="Volver a las secciones" data-auto></nav>
+        
+      </footer>
+    </div>
+    <a class="x-wa" href="https://wa.me/5491168681176?text=Hola%20A%20Pulso%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Pedí por WhatsApp</a>
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        var slots = [[540, 810], [1020, 1260]];
+        function fmt(m) { return Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0"); }
+        function nowBA() {
+          var parts = new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Buenos_Aires", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+          var h = 0, m = 0;
+          parts.forEach(function (p) { if (p.type === "hour") h = +p.value % 24; if (p.type === "minute") m = +p.value; });
+          return h * 60 + m;
+        }
+        var el = document.getElementById("estado");
+        function update() {
+          if (!el) return;
+          var t = nowBA(), open = null, next = null;
+          slots.forEach(function (s) { if (t >= s[0] && t < s[1]) open = s; if (!next && t < s[0]) next = s; });
+          if (open) {
+            el.className = "x-status is-open";
+            el.textContent = "Abierto ahora · cierra " + fmt(open[1]);
+          } else {
+            el.className = "x-status";
+            el.textContent = next ? "Cerrado · abre hoy a las " + fmt(next[0]) : "Cerrado · abre mañana a las " + fmt(slots[0][0]);
+          }
+          el.hidden = false;
+        }
+        try { update(); setInterval(update, 60000); } catch (e) {}
+
+        var buttons = document.querySelectorAll(".x-filter button");
+        var ofertas = document.getElementById("ofertas");
+        buttons.forEach(function (b) {
+          b.addEventListener("click", function () {
+            var f = b.getAttribute("data-f");
+            buttons.forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+            document.querySelectorAll("[data-cat]").forEach(function (c) {
+              c.hidden = f !== "todos" && c.getAttribute("data-cat").split(" ").indexOf(f) === -1;
+            });
+            if (ofertas) ofertas.hidden = f === "15500";
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
