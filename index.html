@@ -187,15 +187,15 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 20px 90px}
 
 <script>
 const V=15500;
+const slug=n=>n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/é/g,"e").replace(/ de cerdo$/,"").replace(/[^a-z]+/g,"-").replace(/^-|-$/g,"");
 const P=[
-// vacuno a $15.500
-...[["Nalga","vacuno"],["Tapa de nalga","vacuno"],["Cuadril","vacuno"],["Colita de cuadril","vacuno"],["Peceto","vacuno"],["Bola de lomo","vacuno"],["Cuadrada","vacuno"],["Palomita","vacuno"],["Tortuguita","vacuno"],["Roast beef","asado"],["Aguja","asado"],["Paleta","vacuno"],["Marucha","asado"],["Carnaza","vacuno"],["Asado","asado"],["Tapa de asado","asado"],["Matambre","asado"],["Entraña","asado"],["Bife ancho","asado"]].map(([n,i])=>({n,c:"vacuno",p:V,img:i})),
-{n:"Lomo",c:"vacuno",p:0,img:"vacuno"},{n:"Bife de chorizo",c:"vacuno",p:0,img:"asado"},{n:"Vacío",c:"vacuno",p:0,img:"asado"},
-{n:"Milanesa de carne",c:"vacuno",p:10000,img:"milanesa",o:1},{n:"Falda",c:"vacuno",p:10000,img:"asado",o:1},{n:"Picada especial",c:"vacuno",p:12000,img:"picada",o:1,t:"Mejor oferta"},{n:"Chinchulín",c:"vacuno",p:6000,img:"asado",o:1},{n:"Riñón",c:"vacuno",p:7000,img:"vacuno",o:1},
-{n:"Bondiola",c:"cerdo",p:8500,img:"cerdo",o:1},{n:"Carré de cerdo",c:"cerdo",p:8500,img:"cerdo",o:1},{n:"Pechito de cerdo",c:"cerdo",p:8500,img:"cerdo",o:1},
-{n:"Pollo entero",c:"pollo",p:4000,img:"pollo",o:1},{n:"Pata y muslo",c:"pollo",p:4200,img:"pollo",o:1},{n:"Milanesa de pollo",c:"pollo",p:10000,img:"milanesa",o:1}
-];
-const K=[{n:"Osobuco · Pack 2 kg",p:16000,img:"vacuno",d:"Ideal para guiso o puchero",t:"Pack"},{n:"Falda · Pack 2 kg",p:18000,img:"asado",d:"Para el puchero o la olla",t:"Pack"},{n:"Picada especial · Pack 2 kg",p:20000,img:"picada",d:"Para hamburguesas, salsas y empanadas",t:"Mejor oferta"},{n:"Milanesa de pollo · Pack 2 kg",p:16000,img:"milanesa",d:"Lista para freír u hornear",t:"Pack"},{n:"Pata y muslo · Pack 3 kg",p:11000,img:"pollo",d:"Para la parrilla o el horno",t:"Pack"}];
+...["Nalga","Tapa de nalga","Cuadril","Colita de cuadril","Peceto","Bola de lomo","Cuadrada","Palomita","Tortuguita","Roast beef","Aguja","Paleta","Marucha","Carnaza","Asado","Tapa de asado","Matambre","Entraña","Bife ancho"].map(n=>({n,c:"vacuno",p:V})),
+{n:"Lomo",c:"vacuno",p:0},{n:"Bife de chorizo",c:"vacuno",p:0},{n:"Vacío",c:"vacuno",p:0},
+{n:"Milanesa de carne",c:"vacuno",p:10000,o:1},{n:"Falda",c:"vacuno",p:10000,o:1},{n:"Picada especial",c:"vacuno",p:12000,o:1,t:"Mejor oferta",img:"picada"},{n:"Chinchulín",c:"vacuno",p:6000,o:1},{n:"Riñón",c:"vacuno",p:7000,o:1},
+{n:"Bondiola",c:"cerdo",p:8500,o:1},{n:"Carré de cerdo",c:"cerdo",p:8500,o:1},{n:"Pechito de cerdo",c:"cerdo",p:8500,o:1},
+{n:"Pollo entero",c:"pollo",p:4000,o:1},{n:"Pata y muslo",c:"pollo",p:4200,o:1},{n:"Milanesa de pollo",c:"pollo",p:10000,o:1}
+].map(x=>({...x,img:"c-"+(x.img||slug(x.n))}));
+const K=[{n:"Osobuco · Pack 2 kg",p:16000,img:"osobuco",d:"Ideal para guiso o puchero",t:"Pack"},{n:"Falda · Pack 2 kg",p:18000,img:"falda",d:"Para el puchero o la olla",t:"Pack"},{n:"Picada especial · Pack 2 kg",p:20000,img:"picada",d:"Para hamburguesas, salsas y empanadas",t:"Mejor oferta"},{n:"Milanesa de pollo · Pack 2 kg",p:16000,img:"milanesa-de-pollo",d:"Lista para freír u hornear",t:"Pack"},{n:"Pata y muslo · Pack 3 kg",p:11000,img:"pata-y-muslo",d:"Para la parrilla o el horno",t:"Pack"}].map(x=>({...x,img:"c-"+x.img}));
 const T=[["todos","Todos"],["vacuno","Vacuno"],["cerdo","Cerdo"],["pollo","Pollo"],["ofertas","Ofertas"]];
 const $=s=>document.querySelector(s),fmt=n=>"$"+Math.round(n).toLocaleString("es-AR");
 const kg=q=>(q%1?q.toString().replace(".",","):q)+" kg";
