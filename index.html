@@ -175,7 +175,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 20px 90px}
  </div>
  <div class="info">
   <p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Avellaneda 1155, Bernal (entre Smith y Viejo Bueno, dentro del súper)</p>
-  <p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Todos los días 9 a 13:30 · 17 a 21</p>
+  <p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Lun a sáb 9 a 13:30 · 17 a 21 · Dom 9 a 13:30</p>
   <p>☎ WhatsApp:&nbsp;<b><a href="https://wa.me/5491168681176">11 6868-1176</a></b></p>
   <p>📷 Instagram:&nbsp;<a href="https://www.instagram.com/apulso.carniceria/">@apulso.carniceria</a></p>
   <div class="map"><iframe loading="lazy" title="Mapa" src="https://maps.google.com/maps?q=Avellaneda%201155%2C%20Bernal%2C%20Buenos%20Aires&z=15&output=embed"></iframe><a href="https://www.google.com/maps/dir/?api=1&destination=Avellaneda%201155%2C%20Bernal%2C%20Buenos%20Aires" target="_blank" rel="noopener">Ver en el mapa ↗</a></div>
@@ -229,7 +229,7 @@ document.addEventListener("click",ev=>{const b=ev.target.closest("button,a[data-
  if(d.cm){const pk=K.includes(find(d.cm));const mn=1;cart[d.cm]-=pk?1:.5;if(cart[d.cm]<mn)delete cart[d.cm];render()}
  if(d.d){delete cart[d.d];render()}
 });
-function status(){const t=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Argentina/Buenos_Aires"}));const m=t.getHours()*60+t.getMinutes();const o=(m>=540&&m<810)||(m>=1020&&m<1260);const s=$("#st");s.className="status "+(o?"open":"closed");s.textContent=o?"Abierto ahora":"Cerrado ahora"}
+function status(){const t=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Argentina/Buenos_Aires"}));const m=t.getHours()*60+t.getMinutes();const o=(m>=540&&m<810)||(t.getDay()!==0&&m>=1020&&m<1260);const s=$("#st");s.className="status "+(o?"open":"closed");s.textContent=o?"Abierto ahora":"Cerrado ahora"}
 tabs();grid();packs();render();status();setInterval(status,60000);
 </script>
 </body>
