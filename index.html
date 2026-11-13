@@ -134,7 +134,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 20px 90px}
    <div class="price serif">$15.500 el kilo</div>
    <p>19 cortes vacunos · Bernal · Dentro del súper</p>
    <div class="btns"><a class="bwa" href="https://wa.me/5491168681176?text=Hola%20A%20Pulso%2C%20quiero%20hacer%20un%20pedido">Pedir por WhatsApp</a><a class="bout" href="#cortes">Ver precios</a></div>
-   <div class="fine">Compra mínima 1 kg · Lomo, bife de chorizo y vacío: consultá precio</div>
+   <div class="fine">Compra mínima 1 kg · Lomo y bife de chorizo $23.000 el kg · Vacío $21.000 el kg</div>
   </div>
  </section>
  <div class="feats">
@@ -190,7 +190,7 @@ const V=15500;
 const slug=n=>n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/é/g,"e").replace(/ de cerdo$/,"").replace(/[^a-z]+/g,"-").replace(/^-|-$/g,"");
 const P=[
 ...["Nalga","Tapa de nalga","Cuadril","Colita de cuadril","Peceto","Bola de lomo","Cuadrada","Palomita","Tortuguita","Roast beef","Aguja","Paleta","Marucha","Carnaza","Asado","Tapa de asado","Matambre","Entraña","Bife ancho"].map(n=>({n,c:"vacuno",p:V})),
-{n:"Lomo",c:"vacuno",p:0},{n:"Bife de chorizo",c:"vacuno",p:0},{n:"Vacío",c:"vacuno",p:0},
+{n:"Lomo",c:"vacuno",p:23000},{n:"Bife de chorizo",c:"vacuno",p:23000},{n:"Vacío",c:"vacuno",p:21000},
 {n:"Milanesa de carne",c:"vacuno",p:10000,o:1},{n:"Falda",c:"vacuno",p:10000,o:1},{n:"Picada especial",c:"vacuno",p:12000,o:1,t:"Mejor oferta",img:"picada"},{n:"Chinchulín",c:"vacuno",p:6000,o:1},{n:"Riñón",c:"vacuno",p:7000,o:1},
 {n:"Bondiola",c:"cerdo",p:8500,o:1},{n:"Carré de cerdo",c:"cerdo",p:8500,o:1},{n:"Pechito de cerdo",c:"cerdo",p:8500,o:1},
 {n:"Pollo entero",c:"pollo",p:4000,o:1},{n:"Pata y muslo",c:"pollo",p:4200,o:1},{n:"Milanesa de pollo",c:"pollo",p:10000,o:1}
